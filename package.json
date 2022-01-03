@@ -1,6 +1,6 @@
 {
   "name": "vertojs",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Verto FreeSWITCH interface",
   "main": "dist/index.js",
   "author": "Roman Yerin <r.yerin@ion.team>",
@@ -38,7 +38,6 @@
     "source-map-loader": "^0.2.4",
     "ts-loader": "^6.2.0",
     "typescript": "^3.6.3",
-    "webpack-cli": "^3.3.9",
     "ws": "^7.1.2"
   },
   "dependencies": {}

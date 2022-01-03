@@ -3,3 +3,4 @@ node_modules
 src/*.js
 .size-snapshot.json
 dist
+tags
