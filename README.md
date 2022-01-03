@@ -8,7 +8,8 @@ take care of fetch media tracks yourself (I think it is better not to hide usefu
 ## Status
 
 This is a work in progress code. However, it is stable enough to use basic functions (calls).
-I believe and I hope the source code is much better than my English :-)
+
+Pull requests are welcomed.
 
 
 ## Get started
@@ -32,30 +33,29 @@ Check index.html in the package directory to find out how to use this code with 
 
 ```typescript
 let verto = new Verto(options: VertoOptions)
-
 ```
 
 ```typescript
 interface VertoOptions {
   transportConfig : JsonRpcClientParams 
-  // Verto transport configuration, check below
+  	// Verto transport configuration, check below
   
   rtcConfig?      : RTCConfiguration    
     // RTCConfiguration object, as described here 
-  // https://developer.mozilla.org/en-US/docs/Web/API/RTCConfiguration
-  // The most important thing is iceServers item that should be set to go over NAT
+  	// https://developer.mozilla.org/en-US/docs/Web/API/RTCConfiguration
+  	// The most important thing is iceServers item that should be set to go over NAT
   
   debug?          : boolean
-  // Set true to get some useful debug info in browser console 
+  	// Set true to get some useful debug info in browser console 
   
   ice_timeout?    : number
-  // Milliseconds to stop waiting for ice candidates, default to 3000ms
+  	// Milliseconds to stop waiting for ice candidates, default to 3000ms
 }
 
 interface JsonRpcClientParams {
   socketUrl       : string
-  // The URL where the verto interface lives
-  // wss://server.example.com:8082
+  	// The URL where the verto interface lives
+  	// wss://server.example.com:8082
 
   login           : string
   passwd          : string
@@ -91,14 +91,12 @@ verto.subscribeEvent('invite', call => {
 
   call.answer(local_stream.getTracks())
 })
-
 ```
 
 ### Place calls
 
 
 ```typescript
-
 let local_stream = await navigator.mediaDevices.getUserMedia({audio:true})
 
 let call = verto.call(local_stream.getTracks(), "9664")
@@ -112,7 +110,6 @@ call.subscribeEvent('track', (track) => {
   let el = document.getElementById('video')
   el.srcObject = stream
 })
-
 ```
 
 # API description
@@ -127,30 +124,29 @@ There's a number (pretty small number) of Classes and Interfaces provided.
 
 ```typescript
 let verto = new Verto(options: VertoOptions)
-
 ```
 
 ```typescript
 interface VertoOptions {
   transportConfig : JsonRpcClientParams 
-  // Verto transport configuration, check below
+  	// Verto transport configuration, check below
   
   rtcConfig?      : RTCConfiguration    
     // RTCConfiguration object, as described here 
-  // https://developer.mozilla.org/en-US/docs/Web/API/RTCConfiguration
-  // The most important thing is iceServers item that should be set to go over NAT
+  	// https://developer.mozilla.org/en-US/docs/Web/API/RTCConfiguration
+  	// The most important thing is iceServers item that should be set to go over NAT
   
   debug?          : boolean
-  // Set true to get some useful debug info in browser console 
+  	// Set true to get some useful debug info in browser console 
   
   ice_timeout?    : number
-  // Milliseconds to stop waiting for ice candidates, default to 3000ms
+  	// Milliseconds to stop waiting for ice candidates, default to 3000ms
 }
 
 interface JsonRpcClientParams {
   socketUrl       : string
-  // The URL where the verto interface lives
-  // wss://server.example.com:8082
+  	// The URL where the verto interface lives
+  	// wss://server.example.com:8082
 
   login           : string
   passwd          : string
@@ -403,18 +399,18 @@ interface VertoCallOptions {
 ```typescript
 interface VertoOptions {
   transportConfig : JsonRpcClientParams 
-  // Verto transport configuration, check below
+  	// Verto transport configuration, check below
   
   rtcConfig?      : RTCConfiguration    
     // RTCConfiguration object, as described here 
-  // https://developer.mozilla.org/en-US/docs/Web/API/RTCConfiguration
-  // The most important thing is iceServers item that should be set to go over NAT
+  	// https://developer.mozilla.org/en-US/docs/Web/API/RTCConfiguration
+  	// The most important thing is iceServers item that should be set to go over NAT
   
   debug?          : boolean
-  // Set true to get some useful debug info in browser console 
+  	// Set true to get some useful debug info in browser console 
   
   ice_timeout?    : number
-  // Milliseconds to stop waiting for ice candidates, default to 3000ms
+  	// Milliseconds to stop waiting for ice candidates, default to 3000ms
 }
 ```
 
@@ -422,8 +418,8 @@ interface VertoOptions {
 ```typescript
 interface JsonRpcClientParams {
   socketUrl       : string
-  // The URL where the verto interface lives
-  // wss://server.example.com:8082
+  	// The URL where the verto interface lives
+  	// wss://server.example.com:8082
 
   login           : string
   passwd          : string
@@ -475,7 +471,7 @@ verto.unsubscribeEvent(name, handler_id)
 
 ## License
 
-Copyright (c) 2019 Roman Yerin &lt;r.yerin@640kb.co.uk&gt;
+Copyright (c) 2019–2022 Roman Yerin &lt;r.yerin@ion.team&gt;
 
 Licensed under the 3-clause BSD license.
 

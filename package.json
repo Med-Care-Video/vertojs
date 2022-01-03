@@ -2,12 +2,16 @@
   "name": "vertojs",
   "version": "0.0.3",
   "description": "Verto FreeSWITCH interface",
-  "main": "src/index.ts",
-  "author": "Roman Yerin <r.yerin@640kb.co.uk>",
+  "main": "dist/index.js",
+  "author": "Roman Yerin <r.yerin@ion.team>",
   "license": "BSD-3-Clause",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/roman-yerin/vertojs.git"
+  },
+  "scripts": {
+    "build": "npx rollup -c",
+    "test": "npx mocha --require @babel/register"
   },
   "keywords": [
     "verto",
@@ -18,13 +22,22 @@
   },
   "homepage": "https://github.com/roman-yerin/vertojs#readme",
   "devDependencies": {
+    "@babel/cli": "^7.16.7",
+    "@babel/core": "^7.16.7",
+    "@babel/preset-env": "^7.16.7",
+    "@babel/register": "^7.16.7",
     "@types/ws": "^6.0.3",
     "https": "^1.0.0",
     "mime": "^2.4.4",
+    "mocha": "^9.1.3",
+    "rollup": "^2.62.0",
+    "rollup-plugin-size-snapshot": "^0.12.0",
+    "rollup-plugin-terser": "^7.0.2",
+    "rollup-plugin-typescript2": "^0.31.1",
+    "rollup-plugin-visualizer": "^5.5.2",
     "source-map-loader": "^0.2.4",
     "ts-loader": "^6.2.0",
     "typescript": "^3.6.3",
-    "webpack": "^4.41.5",
     "webpack-cli": "^3.3.9",
     "ws": "^7.1.2"
   },
