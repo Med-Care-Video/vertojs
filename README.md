@@ -38,24 +38,24 @@ let verto = new Verto(options: VertoOptions)
 ```typescript
 interface VertoOptions {
   transportConfig : JsonRpcClientParams 
-  	// Verto transport configuration, check below
+  // Verto transport configuration, check below
   
   rtcConfig?      : RTCConfiguration    
-    // RTCConfiguration object, as described here 
-  	// https://developer.mozilla.org/en-US/docs/Web/API/RTCConfiguration
-  	// The most important thing is iceServers item that should be set to go over NAT
+  // RTCConfiguration object, as described here 
+  // https://developer.mozilla.org/en-US/docs/Web/API/RTCConfiguration
+  // The most important thing is iceServers item that should be set to go over NAT
   
   debug?          : boolean
-  	// Set true to get some useful debug info in browser console 
+  // Set true to get some useful debug info in browser console 
   
   ice_timeout?    : number
-  	// Milliseconds to stop waiting for ice candidates, default to 3000ms
+  // Milliseconds to stop waiting for ice candidates, default to 3000ms
 }
 
 interface JsonRpcClientParams {
   socketUrl       : string
-  	// The URL where the verto interface lives
-  	// wss://server.example.com:8082
+  // The URL where the verto interface lives
+  // wss://server.example.com:8082
 
   login           : string
   passwd          : string
@@ -129,30 +129,30 @@ let verto = new Verto(options: VertoOptions)
 ```typescript
 interface VertoOptions {
   transportConfig : JsonRpcClientParams 
-  	// Verto transport configuration, check below
+  // Verto transport configuration, check below
   
   rtcConfig?      : RTCConfiguration    
-    // RTCConfiguration object, as described here 
-  	// https://developer.mozilla.org/en-US/docs/Web/API/RTCConfiguration
-  	// The most important thing is iceServers item that should be set to go over NAT
+  // RTCConfiguration object, as described here 
+  // https://developer.mozilla.org/en-US/docs/Web/API/RTCConfiguration
+  // The most important thing is iceServers item that should be set to go over NAT
   
   debug?          : boolean
-  	// Set true to get some useful debug info in browser console 
+  // Set true to get some useful debug info in browser console 
   
   ice_timeout?    : number
-  	// Milliseconds to stop waiting for ice candidates, default to 3000ms
+  // Milliseconds to stop waiting for ice candidates, default to 3000ms
 }
 
 interface JsonRpcClientParams {
   socketUrl       : string
-  	// The URL where the verto interface lives
-  	// wss://server.example.com:8082
+  // The URL where the verto interface lives
+  // wss://server.example.com:8082
 
   login           : string
   passwd          : string
 }
 ```
-**login**
+#### login
 
 ***Parameters***
 
@@ -160,13 +160,13 @@ interface JsonRpcClientParams {
 
 ***Returns***
 
-- *Promise*, that will be resolved if the login process succeed or threw an exception otherwise.
+*Promise*, that will be resolved if the login process succeed or threw an exception otherwise.
 
 ```typescript
 verto.login()
 ```
 
-**call**
+#### **call**
 
 ***Parameters***
 
@@ -185,7 +185,7 @@ verto.login()
 let call = verto.call(tracks, destination, options)
 ```
 
-**isLogged**
+#### **isLogged**
 
 ***Parameters***
 
@@ -199,7 +199,7 @@ let call = verto.call(tracks, destination, options)
 let isLogged = verto.isLogged()
 ```
 
-**logout**
+#### **logout**
 
 ***Parameters***
 
@@ -241,7 +241,7 @@ This class instances should never be built manually, but using verto.call or inc
 
 ### Methods
 
-**answer**
+#### **answer**
 
 ***Parameters***
 
@@ -255,7 +255,7 @@ This class instances should never be built manually, but using verto.call or inc
 ```typescript
 call.answer(tracks)
 ```
-**hangup**
+#### **hangup**
 
 ***Parameters***
 
@@ -269,7 +269,7 @@ call.answer(tracks)
 call.hangup()
 ```
 
-**dtmf**
+#### **dtmf**
 
 ***Parameters***
 
@@ -283,7 +283,7 @@ call.hangup()
 call.dtmf('5')
 ```
 
-**hold**
+#### **hold**
 
 ***Parameters***
 
@@ -297,7 +297,7 @@ call.dtmf('5')
 call.hold()
 ```
 
-**unhold**
+#### **unhold**
 
 ***Parameters***
 
@@ -311,7 +311,7 @@ call.hold()
 call.unhold()
 ```
 
-**toggleHold**
+#### **toggleHold**
 
 ***Parameters***
 
@@ -325,7 +325,7 @@ call.unhold()
 call.toggleHold()
 ```
 
-**getStats**
+#### **getStats**
 
 ***Parameters***
 
@@ -337,15 +337,16 @@ https://developer.mozilla.org/en-US/docs/Web/API/RTCPeerConnection/getStats
 
 ### Instance variables
 
-**id**
+#### **id**
 
 - *String* &mdash; the call id
 
-**options**
+#### **options**
 
 - *[VertoCallOptions](#VertoCallOptions)*
 
-**direction**
+#### **direction**
+
 - *[CallDirection](#CallDirection)*
 
 
@@ -357,7 +358,7 @@ Fires when the call is answered.
 
 ```typescript
 call.subscribeEvent('answer', () => {
-    // Do something on answer
+// Do something on answer
 })
 ```
 
@@ -388,7 +389,7 @@ Fires when the call is ended.
 
 ```typescript
 call.subscribeEvent('bye', cause => {
-    // Do something on call end
+// Do something on call end
 })
 ```
 
@@ -409,18 +410,18 @@ interface VertoCallOptions {
 ```typescript
 interface VertoOptions {
   transportConfig : JsonRpcClientParams 
-  	// Verto transport configuration, check below
+  // Verto transport configuration, check below
   
-  rtcConfig?      : RTCConfiguration    
-    // RTCConfiguration object, as described here 
-  	// https://developer.mozilla.org/en-US/docs/Web/API/RTCConfiguration
-  	// The most important thing is iceServers item that should be set to go over NAT
+  rtcConfig?      : RTCConfiguration
+  // RTCConfiguration object, as described here 
+  // https://developer.mozilla.org/en-US/docs/Web/API/RTCConfiguration
+  // The most important thing is iceServers item that should be set to go over NAT
   
   debug?          : boolean
-  	// Set true to get some useful debug info in browser console 
+  // Set true to get some useful debug info in browser console 
   
   ice_timeout?    : number
-  	// Milliseconds to stop waiting for ice candidates, default to 3000ms
+  // Milliseconds to stop waiting for ice candidates, default to 3000ms
 }
 ```
 
@@ -428,8 +429,8 @@ interface VertoOptions {
 ```typescript
 interface JsonRpcClientParams {
   socketUrl       : string
-  	// The URL where the verto interface lives
-  	// wss://server.example.com:8082
+  // The URL where the verto interface lives
+  // wss://server.example.com:8082
 
   login           : string
   passwd          : string
