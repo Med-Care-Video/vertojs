@@ -97,6 +97,10 @@ class VertoCall extends VertoBase{
 
   }
 
+  getStats() {
+    return this.rtc.getStats()
+  }
+
   onAnswer(sdp: string) {
     if (sdp) {
             this.rtc.onMedia(sdp)

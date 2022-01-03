@@ -325,6 +325,16 @@ call.unhold()
 call.toggleHold()
 ```
 
+**getStats**
+
+***Parameters***
+
+- None
+
+***Returns***
+
+https://developer.mozilla.org/en-US/docs/Web/API/RTCPeerConnection/getStats
+
 ### Instance variables
 
 **id**

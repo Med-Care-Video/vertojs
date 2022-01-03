@@ -1,6 +1,6 @@
 {
   "name": "vertojs",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Verto FreeSWITCH interface",
   "main": "dist/index.js",
   "author": "Roman Yerin <r.yerin@ion.team>",

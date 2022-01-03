@@ -111,6 +111,10 @@ class VertoRtc extends VertoBase{
     .catch(error => {})
   }
 
+  getStats() {
+    return this.pc ? this.pc.getStats() : Promise.reject()
+  }
+
   onMedia(sdp: string) {
     this.pc.setRemoteDescription(new RTCSessionDescription({type: 'answer', sdp}))
     .then(() => {
