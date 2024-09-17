@@ -240,7 +240,22 @@ class Verto extends VertoBase{
   call(tracks: Array<MediaStreamTrack>, destination: string, options?:VertoCallOptions): VertoCall {
     let call = new VertoCall(this.options.rtcConfig, this.rpc, destination, generateGUID(), options, this.options.ice_timeout, this.options.debug)
 
-    for(let track of tracks) call.addTrack(track)
+    // First add audio track, then video
+    // fix for safari browser m-line order bug
+    for (let track of tracks) {
+      if (track.kind === 'audio') {
+        console.log("AUDIO TRACK: ", track);
+        call.addTrack(track);
+      }
+    }
+
+    for (let track of tracks) {
+      if (track.kind !== 'audio') {
+        console.log("TRACK: ", track);
+        call.addTrack(track);
+      }
+    }
+
     this.calls[call.id] = call
     return call
   }
