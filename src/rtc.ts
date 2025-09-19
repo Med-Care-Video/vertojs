@@ -49,6 +49,49 @@ Verto RTC is an interface to WebRTC
 
 */
 
+const normalizeCRLF = (sdp = "") => sdp.replace(/\r?\n/g, "\r\n");
+const serializeSdp = (sdp = "") => sdp;
+const isSafariUA = () => {
+  const ua = (typeof navigator !== "undefined" && navigator.userAgent) || "";
+  return /Safari/.test(ua) && !/Chrome|Chromium|Edg/.test(ua);
+};
+
+const mungeSdpIfNeeded = (sdp = "") => {
+  sdp = normalizeCRLF(sdp);
+
+  if (!isSafariUA()) {
+    // Find VP8 PT from "a=rtpmap:<pt> VP8/90000"
+    const vp8Match = sdp.match(/^a=rtpmap:(\d+)\s+VP8\/90000.*$/m);
+    if (vp8Match) {
+      const pt = vp8Match[1];
+      // No spaces after semicolons to avoid line folding
+      const params = [
+        "x-google-min-bitrate=1000",
+        "x-google-start-bitrate=2000",
+        "x-google-max-bitrate=4000",
+      ].join(";");
+      const desiredFmtp = `a=fmtp:${pt} ${params}`;
+
+      const fmtpRe = new RegExp(`^a=fmtp:${pt}\\s+.*$`, "m");
+      if (fmtpRe.test(sdp)) {
+        sdp = sdp.replace(fmtpRe, desiredFmtp);
+      } else {
+        const rtpmapRe = new RegExp(`(^a=rtpmap:${pt}.*\\r?\\n)`, "m");
+        sdp = sdp.replace(rtpmapRe, `$1${desiredFmtp}\r\n`);
+      }
+    }
+  }
+
+  return serializeSdp(sdp);
+};
+
+const stripIceCredentials = (sdp = "") =>
+  sdp
+    .replace(/^a=ice-ufrag:.*\r?\n/mg, "")
+    .replace(/^a=ice-pwd:.*\r?\n/mg, "")
+    .replace(/^a=ice-ufrag:.*$/mg, "")
+    .replace(/^a=ice-pwd:.*$/mg, "");
+
 class VertoRtc extends VertoBase{
   private pc      : RTCPeerConnection
   private state     : CallState = CallState.None
@@ -74,10 +117,12 @@ class VertoRtc extends VertoBase{
   }
 
   private onCandidate(event: RTCPeerConnectionIceEvent) {
+    console.log("CAND: ", event.candidate?.candidate)
   }
 
   private onIceGatheringStateChange(event: Event){
     if(this.pc.iceGatheringState == 'complete') {
+      console.log("iceGatheringState, ", this.pc.iceGatheringState)
       if(this.ice_timer) clearTimeout(this.ice_timer)
       if(this.state == CallState.MessageSent) return // Offer or answer is already sent
       if(this.direction) 
@@ -88,6 +133,7 @@ class VertoRtc extends VertoBase{
   }
 
   private iceTimerTriggered() {
+    console.log("Timeout triggered:", this.pc)
     if(this.debug) console.log(this.pc)
     if(this.state != CallState.Schedulled) return // The call is not in schedulled state, do nothing
     this.state = CallState.MessageSent
@@ -96,12 +142,31 @@ class VertoRtc extends VertoBase{
     else 
       this.dispatchEvent('send-answer',this.pc.localDescription)
   }
-
+  
   private onNegotiation() {
     this.pc
     .createOffer()
     .then(offer => {
       this.ice_timer = setTimeout(this.iceTimerTriggered.bind(this), this.ice_timeout)
+
+      console.log("SDP: ", offer.sdp)
+      // // Look for video codecs like VP8, VP9, or H264. Example here for VP8 with payload type 96:
+      // const videoCodecRegex = /a=rtpmap:(\d+) VP8\/90000/g;
+      // let match = videoCodecRegex.exec(offer.sdp);
+      
+      // if (match) {
+      //     const payloadType = match[1];
+      //     const fmtpLine = `a=fmtp:${payloadType} x-google-min-bitrate=500; x-google-start-bitrate=2000; x-google-max-bitrate=4000`;
+          
+      //     // Insert the fmtp line right after the rtpmap line for VP8
+      //     offer.sdp = offer.sdp.replace(new RegExp(`(a=rtpmap:${payloadType}.*\\r\\n)`), `$1${fmtpLine}\\r\\n`);
+      // }
+
+      offer.sdp = mungeSdpIfNeeded(offer.sdp)
+      // offer.sdp = stripIceCredentials(offer.sdp)
+
+      console.log("MODIFIED OFFER:", offer.sdp)
+
       return this.pc.setLocalDescription(offer)
     })
     .then(() => {

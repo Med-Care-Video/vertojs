@@ -237,8 +237,9 @@ class Verto extends VertoBase{
     })
   }
 
-  call(tracks: Array<MediaStreamTrack>, destination: string, options?:VertoCallOptions): VertoCall {
-    let call = new VertoCall(this.options.rtcConfig, this.rpc, destination, generateGUID(), options, this.options.ice_timeout, this.options.debug)
+  call(tracks: Array<MediaStreamTrack>, destination: string, options?:VertoCallOptions, sessionId?: string): VertoCall {
+    console.log("SESSION ID: ", sessionId)
+    let call = new VertoCall(this.options.rtcConfig, this.rpc, destination, sessionId || generateGUID(), options, this.options.ice_timeout, this.options.debug)
 
     // First add audio track, then video
     // fix for safari browser m-line order bug
